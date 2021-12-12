@@ -1,10 +1,13 @@
 const express = require('express')
 const cors = require('cors')
+const morgan = require('morgan')
 const app = express()
 
 app.use(cors())
 // Parse requests with Content-Type: application/json
 app.use(express.json())
+// Logging
+app.use(morgan("dev"))
 
 const PORT = 3001
 
@@ -26,14 +29,9 @@ const todos = {
     },
 };
 
-// ID generator
-let nextId = Object.keys(todos).length === 0 ? 1 : Math.max(...Object.keys(todos));
-
+// TODO: validate request body
 app.put("/save", (req, res) => {
-    console.log(req.body)
     const { id, items } = req.body;
-
-    console.log(todos)
 
     if (!todos[id]) return res.sendStatus(400);
 
@@ -44,23 +42,6 @@ app.put("/save", (req, res) => {
     }
 
     return res.sendStatus(200)
-})
-
-app.post("/add", (req, res) => {
-    const { todo } = req.body;
-
-    if (!todo) {
-        return res.status(400).send("No todo list provided.");
-    }
-
-    todos[nextId] = {
-        id: nextId,
-        ...todo
-    }
-
-    nextId++;
-
-    res.sendStatus(201);
 })
 
 app.get("/todos", (_, res) => {

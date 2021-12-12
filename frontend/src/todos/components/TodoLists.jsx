@@ -9,10 +9,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ReceiptIcon from '@material-ui/icons/Receipt'
 import Typography from '@material-ui/core/Typography'
 import { TodoListForm } from './TodoListForm'
-import CloudDoneIcon from '@material-ui/icons/CloudDone';
+import CloudDoneOutlinedIcon from '@material-ui/icons/CloudDoneOutlined';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import axios from "axios";
-import { ListItemSecondaryAction } from '@material-ui/core'
 
 const getPersonalTodos = () => {
   return axios.get("/todos")
@@ -28,9 +27,9 @@ const getPersonalTodos = () => {
 const SavingIndicator = ({ isSaving }) => {
   return (
     <span style={{display: "flex", alignItems: "center"}}>
-      {isSaving ? <AutorenewIcon /> : <CloudDoneIcon />}
+      {isSaving ? <AutorenewIcon /> : <CloudDoneOutlinedIcon />}
       <span style={{padding: "0 10px", fontWeight: "bold"}}>
-      {isSaving ? "Sparar..." : "Sparat"}
+      {isSaving ? "Saving ..." : "Saved"}
       </span>
     </span>
   )
