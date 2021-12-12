@@ -29,9 +29,9 @@ const useStyles = makeStyles({
   }
 })
 
-export const ToDoListForm = ({ toDoList, saveToDoList, setIsSaving }) => {
+export const TodoListForm = ({ todoList, saveTodoList, setIsSaving }) => {
   const classes = useStyles()
-  const [todos, setTodos] = useState(toDoList.todos)
+  const [todos, setTodos] = useState(todoList.todos)
 
   const isMount = useIsMount();
 
@@ -41,7 +41,7 @@ export const ToDoListForm = ({ toDoList, saveToDoList, setIsSaving }) => {
   }
 
   const submit = () => {
-    saveToDoList(toDoList.id, { todos })
+    saveTodoList(todoList.id, { todos })
   }
 
   // Autosave
@@ -64,7 +64,7 @@ export const ToDoListForm = ({ toDoList, saveToDoList, setIsSaving }) => {
     <Card className={classes.card}>
       <CardContent>
         <Typography component='h2'>
-          {toDoList.title}
+          {todoList.title}
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form}>
           {todos.map((todo, index) => (

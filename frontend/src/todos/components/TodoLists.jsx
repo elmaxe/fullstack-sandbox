@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ReceiptIcon from '@material-ui/icons/Receipt'
 import Typography from '@material-ui/core/Typography'
-import { ToDoListForm } from './ToDoListForm'
+import { TodoListForm } from './TodoListForm'
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import axios from "axios";
@@ -36,14 +36,14 @@ const SavingIndicator = ({ isSaving }) => {
   )
 }
 
-export const ToDoLists = ({ style }) => {
-  const [toDoLists, setToDoLists] = useState({})
+export const TodoLists = ({ style }) => {
+  const [todoLists, setTodoLists] = useState({})
   const [activeList, setActiveList] = useState()
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     getPersonalTodos()
-    .then(setToDoLists)
+    .then(setTodoLists)
   }, [])
 
   const saveTodoList = async (id, todos) => {
@@ -54,7 +54,7 @@ export const ToDoLists = ({ style }) => {
     setIsSaving(false)
   }
 
-  if (!Object.keys(toDoLists).length) return null
+  if (!Object.keys(todoLists).length) return null
   return <Fragment>
     <Card style={style}>
       <CardHeader
@@ -65,10 +65,10 @@ export const ToDoLists = ({ style }) => {
         <Typography
           component='h2'
         >
-          My ToDo Lists
+          My Todo Lists
         </Typography>
         <List>
-          {Object.keys(toDoLists).map((key) => <ListItem
+          {Object.keys(todoLists).map((key) => <ListItem
             key={key}
             button
             onClick={() => setActiveList(key)}
@@ -76,20 +76,20 @@ export const ToDoLists = ({ style }) => {
             <ListItemIcon>
               <ReceiptIcon />
             </ListItemIcon>
-            <ListItemText primary={toDoLists[key].title} />
+            <ListItemText primary={todoLists[key].title} />
           </ListItem>)}
         </List>
       </CardContent>
     </Card>
-    {toDoLists[activeList] && <ToDoListForm
+    {todoLists[activeList] && <TodoListForm
       key={activeList} // use key to make React recreate component to reset internal state
-      toDoList={toDoLists[activeList]}
+      todoList={todoLists[activeList]}
       setIsSaving={setIsSaving}
-      saveToDoList={(id, { todos }) => {
+      saveTodoList={(id, { todos }) => {
         saveTodoList(id, todos)
-        const listToUpdate = toDoLists[id]
-        setToDoLists({
-          ...toDoLists,
+        const listToUpdate = todoLists[id]
+        setTodoLists({
+          ...todoLists,
           [id]: { ...listToUpdate, todos }
         })
       }}
